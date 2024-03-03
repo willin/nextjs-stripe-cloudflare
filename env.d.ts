@@ -4,4 +4,5 @@ interface CloudflareEnv {
   //
   // KV Example:
   // MY_KV: KVNamespace
+  STRIPE_PRIVATE_KEY: string;
 }

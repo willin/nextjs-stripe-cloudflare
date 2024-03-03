@@ -7,7 +7,7 @@ export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
   const { env, cf, ctx } = getRequestContext();
-  const stripe = Stripe(env.STRIPE_PRIVATE_KEY);
+  const stripe = new Stripe(env.STRIPE_PRIVATE_KEY);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     cancel_url: 'http://localhost:3000/api/cancel'
   });
   console.log(JSON.stringify(session, null, 2));
-  redirect(session.url);
+  redirect(session.url!);
 }
 
 /**
