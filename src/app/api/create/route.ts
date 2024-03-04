@@ -9,10 +9,16 @@ export async function GET(request: NextRequest) {
   const { env, cf, ctx } = getRequestContext();
   const stripe = new Stripe(env.STRIPE_PRIVATE_KEY);
   const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card', 'alipay'], // wechat_pay
+    payment_method_options: {
+      wechat_pay: {
+        client: 'web'
+      }
+    },
     line_items: [
       {
         price_data: {
-          currency: 'usd',
+          currency: 'cny',
           product_data: {
             name: 'T-shirt'
           },
